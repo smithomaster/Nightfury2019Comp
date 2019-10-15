@@ -179,7 +179,7 @@ void autonomous() {
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
- *
+ *og
  * If no competition control is connected, this function will run immediately
  * following initialize().
  *
