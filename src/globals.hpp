@@ -29,6 +29,7 @@ extern int RIGHT_ROLLER_MOTOR_PORT;
 
 // intake motor
 extern int INTAKE_MOVER_MOTOR_PORT;
+extern pros::Motor intake_mover_motor;
 
 // chassis
 extern okapi::ChassisControllerIntegrated drive;

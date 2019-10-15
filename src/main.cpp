@@ -188,22 +188,23 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+    intake_mover_motor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	while(true){
-		drive.tank(driver.get_analog(ANALOG_LEFT_Y),
-				   driver.get_analog(ANALOG_RIGHT_Y) * -1);
+		drive.arcade(driver.get_analog(ANALOG_LEFT_X),
+				   driver.get_analog(ANALOG_RIGHT_Y));
 
-		if (driver.get_digital(DIGITAL_L1)){
-			rollers.forward(-95.25);
-		} else if (driver.get_digital(DIGITAL_L2)){
-			rollers.forward(95.25);
+		if (driver.get_digital(DIGITAL_R2)){
+			rollers.forward(-76.2);
+		} else if (driver.get_digital(DIGITAL_X)){
+			rollers.forward(127);
 		} else {
 			rollers.stop();
 		}
 		
-		if (driver.get_digital(DIGITAL_R1)){
-			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(95.25);
-		} else if (driver.get_digital(DIGITAL_R2)){
-			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-95.25);
+		if (driver.get_digital(DIGITAL_L1)){
+			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(100);
+		} else if (driver.get_digital(DIGITAL_A)){
+			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-100);
 		} else {
 			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
 		}
