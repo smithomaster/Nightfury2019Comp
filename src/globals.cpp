@@ -31,7 +31,7 @@ pros::Motor intake_mover_motor (INTAKE_MOVER_MOTOR_PORT);
 // chassis
 using namespace okapi::literals;
 okapi::ChassisControllerIntegrated drive = okapi::ChassisControllerFactory::create(
-    {FRONT_LEFT_MOTOR_PORT, BACK_LEFT_MOTOR_PORT}, {-FRONT_RIGHT_MOTOR_PORT, -BACK_RIGHT_MOTOR_PORT},
+    {FRONT_LEFT_MOTOR_PORT, BACK_LEFT_MOTOR_PORT}, {-FRONT_RIGHT_MOTOR_PORT, -BACK_RIGHT_MOTOR_PORT}, //reversed motors
     okapi::AbstractMotor::gearset::green,
     {4_in, 14.55_in}
 );
