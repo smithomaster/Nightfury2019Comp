@@ -41,6 +41,13 @@ void on_stack_button()
     }
 }
 
+void releaseCubesAuto(){
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(50);
+    pros::delay(2000);
+    rollers.forward(-2);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
+    rollers.stop();
+}
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -90,17 +97,21 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+    drive.setMaxVelocity(50);
+    rollers.setMaxVelocity(10);
     using namespace okapi;
-    rollers.forward(-127);
+    rollers.forward(30);
     if (ALLIANCE == false){ // RED
         if (STACK == false) { // BIG
-            if (POSITION == false){ // FAR
+            if (POSITION == false){ // FARpr
                 drive.moveDistance(2_ft);
+                rollers.stop();
                 drive.turnAngle(-180_deg);
                 drive.moveDistance(2_ft);
                 drive.turnAngle(90_deg);
                 drive.moveDistance(2.5_ft);
-                rollers.forward(127);
+                releaseCubesAuto();
+                drive.moveDistance(-2_ft);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(1_ft);
                 drive.turnAngle(90_deg);
@@ -109,7 +120,10 @@ void autonomous() {
                 drive.moveDistance(1.5_ft);
                 drive.turnAngle(90_deg);
                 drive.moveDistance(2_ft);
-                rollers.forward(127);
+                pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(40);
+                pros::delay(2000);
+                pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
+                rollers.forward(-40);
             }
         }
         if (STACK == true) { // SMALL
@@ -121,14 +135,16 @@ void autonomous() {
                 drive.moveDistance(3_ft);
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2_ft);
-                rollers.forward(127);
+                releaseCubesAuto();
+                rollers.forward(-40);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(3_ft);
                 drive.turnAngle(90_deg);
                 drive.moveDistance(1_ft);
                 drive.turnAngle(90_deg);
                 drive.moveDistance(2_ft);
-                rollers.forward(127);
+                releaseCubesAuto();
+                rollers.forward(-40);
             }
         }
     }
@@ -136,11 +152,13 @@ void autonomous() {
         if (STACK == false) { // BIG
             if (POSITION == false){ // FAR
                 drive.moveDistance(2_ft);
-                drive.turnAngle(180_deg);
-                drive.moveDistance(2_ft);
-                drive.turnAngle(-90_deg);
-                drive.moveDistance(2.5_ft);
-                rollers.forward(127);
+                drive.turnAngle(90_deg);
+                drive.moveDistance(3.5_ft);
+                rollers.stop();
+                drive.turnAngle(90_deg);
+                drive.moveDistance(1.5_ft);
+                releaseCubesAuto();
+                drive.moveDistance(-1.5_ft);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(1_ft);
                 drive.turnAngle(-90_deg);
@@ -149,7 +167,8 @@ void autonomous() {
                 drive.moveDistance(1.5_ft);
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2_ft);
-                rollers.forward(127);
+                releaseCubesAuto();
+                rollers.forward(-40);
             }
         }
         if (STACK == true) { // SMALL
@@ -161,14 +180,16 @@ void autonomous() {
                 drive.moveDistance(3_ft);
                 drive.turnAngle(90_deg);
                 drive.moveDistance(2_ft);
-                rollers.forward(127);
+                releaseCubesAuto();
+                rollers.forward(-40);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(3_ft);
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(1_ft);
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2_ft);
-                rollers.forward(127);
+                releaseCubesAuto();
+                rollers.forward(-40);
             }
         }
     }
@@ -189,21 +210,29 @@ void autonomous() {
  */
 void opcontrol() {
     intake_mover_motor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    drive.setMaxVelocity(75);
+    int left = 0;
+    int right = 0;
 	while(true){
-		drive.arcade(driver.get_analog(ANALOG_LEFT_X),
-				   driver.get_analog(ANALOG_RIGHT_Y));
-
+        right = driver.get_analog(ANALOG_RIGHT_Y);
+        left = driver.get_analog(ANALOG_LEFT_Y);
+        right = right / 127;
+        left = left / 127;
+		drive.tank(left, right);
 		if (driver.get_digital(DIGITAL_R2)){
-			rollers.forward(-76.2);
+			rollers.forward(63.5);
 		} else if (driver.get_digital(DIGITAL_X)){
-			rollers.forward(127);
-		} else {
+			rollers.forward(-12);
+        } else if (driver.get_digital(DIGITAL_B)){
+            rollers.forward(-1);
+        }
+        else {
 			rollers.stop();
 		}
 		
-		if (driver.get_digital(DIGITAL_L1)){
+		if (driver.get_digital(DIGITAL_L2)){ // push forwards
 			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(100);
-		} else if (driver.get_digital(DIGITAL_A)){
+		} else if (driver.get_digital(DIGITAL_L1)){ // move back
 			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-100);
 		} else {
 			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);

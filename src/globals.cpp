@@ -21,7 +21,7 @@ int BACK_LEFT_MOTOR_PORT = 2;
 int BACK_RIGHT_MOTOR_PORT = 9;
 
 // roller motors
-int LEFT_ROLLER_MOTOR_PORT = 7;
+int LEFT_ROLLER_MOTOR_PORT = 3;
 int RIGHT_ROLLER_MOTOR_PORT = 8;
 
 // intake
@@ -36,6 +36,6 @@ okapi::ChassisControllerIntegrated drive = okapi::ChassisControllerFactory::crea
     {4_in, 14.55_in}
 );
 okapi::ChassisControllerIntegrated rollers = okapi::ChassisControllerFactory::create(
-    LEFT_ROLLER_MOTOR_PORT, RIGHT_ROLLER_MOTOR_PORT,
+    -LEFT_ROLLER_MOTOR_PORT, RIGHT_ROLLER_MOTOR_PORT,
     okapi::AbstractMotor::gearset::green
 ); 
