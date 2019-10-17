@@ -45,6 +45,7 @@ void releaseCubesAuto(){
     pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(50);
     pros::delay(2000);
     rollers.forward(-2);
+    pros::delay(2000);
     pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
     rollers.stop();
 }
@@ -120,10 +121,7 @@ void autonomous() {
                 drive.moveDistance(1.5_ft);
                 drive.turnAngle(90_deg);
                 drive.moveDistance(2_ft);
-                pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(40);
-                pros::delay(2000);
-                pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
-                rollers.forward(-40);
+                releaseCubesAuto();
             }
         }
         if (STACK == true) { // SMALL
@@ -136,7 +134,6 @@ void autonomous() {
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2_ft);
                 releaseCubesAuto();
-                rollers.forward(-40);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(3_ft);
                 drive.turnAngle(90_deg);
@@ -144,7 +141,6 @@ void autonomous() {
                 drive.turnAngle(90_deg);
                 drive.moveDistance(2_ft);
                 releaseCubesAuto();
-                rollers.forward(-40);
             }
         }
     }
@@ -168,7 +164,6 @@ void autonomous() {
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2_ft);
                 releaseCubesAuto();
-                rollers.forward(-40);
             }
         }
         if (STACK == true) { // SMALL
@@ -181,7 +176,6 @@ void autonomous() {
                 drive.turnAngle(90_deg);
                 drive.moveDistance(2_ft);
                 releaseCubesAuto();
-                rollers.forward(-40);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(3_ft);
                 drive.turnAngle(-90_deg);
@@ -189,7 +183,6 @@ void autonomous() {
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2_ft);
                 releaseCubesAuto();
-                rollers.forward(-40);
             }
         }
     }
