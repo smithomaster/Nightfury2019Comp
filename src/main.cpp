@@ -104,7 +104,7 @@ void autonomous() {
     rollers.forward(30);
     if (ALLIANCE == false){ // RED
         if (STACK == false) { // BIG
-            if (POSITION == false){ // FARpr
+            if (POSITION == false){ // FAR
                 drive.moveDistance(2_ft);
                 rollers.stop();
                 drive.turnAngle(-180_deg);
@@ -113,34 +113,39 @@ void autonomous() {
                 drive.moveDistance(2.5_ft);
                 releaseCubesAuto();
                 drive.moveDistance(-2_ft);
+                drive.turnAngle(90_deg);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(1_ft);
                 drive.turnAngle(90_deg);
-                drive.moveDistance(2_ft);
+                drive.moveDistance(1.5_ft);
                 drive.turnAngle(90_deg);
                 drive.moveDistance(1.5_ft);
                 drive.turnAngle(90_deg);
-                drive.moveDistance(2_ft);
+                drive.moveDistance(2.5_ft);
                 releaseCubesAuto();
+                drive.moveDistance(-2_ft);
+                drive.turnAngle(90_deg);
             }
         }
         if (STACK == true) { // SMALL
             if (POSITION == false){ // FAR
                 drive.moveDistance(3_ft);
-                drive.turnAngle(90_deg);
-                drive.moveDistance(1_ft);
-                drive.turnAngle(90_deg);
+                drive.turnAngle(180_deg);
                 drive.moveDistance(3_ft);
                 drive.turnAngle(-90_deg);
-                drive.moveDistance(2_ft);
+                drive.moveDistance(2.5_ft);
                 releaseCubesAuto();
+                drive.moveDistance(-2_ft);
+                drive.turnAngle(-90_deg);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(3_ft);
-                drive.turnAngle(90_deg);
+                drive.turnAngle(180_deg);
+                drive.moveDistance(3_ft);
+                drive.turnAngle(-90_deg);
                 drive.moveDistance(1_ft);
-                drive.turnAngle(90_deg);
-                drive.moveDistance(2_ft);
                 releaseCubesAuto();
+                drive.moveDistance(-1.5_ft);
+                drive.turnAngle(-90_deg);
             }
         }
     }
@@ -152,37 +157,45 @@ void autonomous() {
                 drive.moveDistance(3.5_ft);
                 rollers.stop();
                 drive.turnAngle(90_deg);
-                drive.moveDistance(1.5_ft);
+                drive.moveDistance(0.5_ft);
                 releaseCubesAuto();
+                drive.moveDistance(-0.5_ft);
+                drive.turnAngle(180_deg);
                 drive.moveDistance(-1.5_ft);
             } if (POSITION == true){ // NEAR
-                drive.moveDistance(1_ft);
+                drive.moveDistance(2_ft);
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2_ft);
+                rollers.stop();
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(1.5_ft);
                 drive.turnAngle(-90_deg);
-                drive.moveDistance(2_ft);
+                drive.moveDistance(2.5_ft);
                 releaseCubesAuto();
+                drive.moveDistance(-2_ft);
+                drive.turnAngle(-90_deg);
             }
         }
         if (STACK == true) { // SMALL
             if (POSITION == false){ // FAR
                 drive.moveDistance(3_ft);
-                drive.turnAngle(-90_deg);
-                drive.moveDistance(1_ft);
-                drive.turnAngle(-90_deg);
+                rollers.stop();
+                drive.turnAngle(-180_deg);
                 drive.moveDistance(3_ft);
                 drive.turnAngle(90_deg);
-                drive.moveDistance(2_ft);
+                drive.moveDistance(3_ft);
                 releaseCubesAuto();
+                drive.moveDistance(-2_ft);
+                drive.turnAngle(90_deg);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(3_ft);
-                drive.turnAngle(-90_deg);
+                drive.turnAngle(-180_deg);
+                drive.moveDistance(3_ft);
+                drive.turnAngle(90_deg);
                 drive.moveDistance(1_ft);
-                drive.turnAngle(-90_deg);
-                drive.moveDistance(2_ft);
                 releaseCubesAuto();
+                drive.moveDistance(-1.5_ft);
+                drive.turnAngle(90_deg);
             }
         }
     }
