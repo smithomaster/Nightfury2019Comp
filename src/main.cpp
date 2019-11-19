@@ -220,11 +220,20 @@ void opcontrol() {
     int left = 0;
     int right = 0;
 	while(true){
+        if (driver.get_analog(ANALOG_LEFT_X) > 0) {
+            // if ARM ANGLE LESS THAN 20 Degrees rotate motor back
+            MTR_frontLeft.move(driver.get_analog(ANALOG_LEFT_Y));
+            MTR_frontRight.move(driver.get_analog(ANALOG_LEFT_Y));
+        }; 
+        if (driver.get_analog(ANALOG_RIGHT_Y) > 0) {
+            MTR_backLeft.move(driver.get_analog(ANALOG_RIGHT_Y));
+            MTR_backRight.move(driver.get_analog(ANALOG_RIGHT_Y));
+        }
         right = driver.get_analog(ANALOG_RIGHT_Y);
         left = driver.get_analog(ANALOG_LEFT_Y);
         right = right / 127;
         left = left / 127;
-		drive.tank(left, right);
+        
 		if (driver.get_digital(DIGITAL_R2)){
 			rollers.forward(63.5);
 		} else if (driver.get_digital(DIGITAL_X)){

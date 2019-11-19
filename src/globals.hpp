@@ -22,6 +22,10 @@ extern int FRONT_LEFT_MOTOR_PORT;
 extern int FRONT_RIGHT_MOTOR_PORT;
 extern int BACK_LEFT_MOTOR_PORT;
 extern int BACK_RIGHT_MOTOR_PORT;
+extern pros::Motor MTR_backRight;
+extern pros::Motor MTR_backLeft;
+extern pros::Motor MTR_frontRight;
+extern pros::Motor MTR_frontLeft;
 
 // roller motors
 extern int LEFT_ROLLER_MOTOR_PORT;

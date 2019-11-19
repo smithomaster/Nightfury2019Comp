@@ -19,6 +19,10 @@ int FRONT_LEFT_MOTOR_PORT = 1;
 int FRONT_RIGHT_MOTOR_PORT = 10;
 int BACK_LEFT_MOTOR_PORT = 2;
 int BACK_RIGHT_MOTOR_PORT = 9;
+pros::Motor MTR_backRight (BACK_RIGHT_MOTOR_PORT);
+pros::Motor MTR_backLeft (BACK_LEFT_MOTOR_PORT);
+pros::Motor MTR_frontRight (FRONT_RIGHT_MOTOR_PORT);
+pros::Motor MTR_frontLeft (FRONT_LEFT_MOTOR_PORT);
 
 // roller motors
 int LEFT_ROLLER_MOTOR_PORT = 3;
