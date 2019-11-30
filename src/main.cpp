@@ -42,12 +42,43 @@ void on_stack_button()
 }
 
 void releaseCubesAuto(){
-    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(50);
-    pros::delay(2000);
-    rollers.forward(-2);
-    pros::delay(2000);
+    using namespace okapi;
+    pros::delay(400);
+    
+    rollers.setMaxVelocity(50);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(90);
+    rollers.forward(-200);
+    pros::delay(2750);
     pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
+    
+   
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-80);
+    drive.moveDistance(-2_ft);
+    pros::delay(1000);
+     rollers.stop();
+    
+    rollers.setMaxVelocity(200);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
+}
+
+void releaseCubesDiagonal(){
+    using namespace okapi;
+    pros::delay(400);
+    
+    rollers.setMaxVelocity(40);
+    rollers.forward(-200);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(60);
+    pros::delay(2500); 
+    drive.moveDistance(-2_ft);
+    pros::delay(1500);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
+    
     rollers.stop();
+    
+    rollers.setMaxVelocity(200);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-80);
+    pros::delay(1000);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
 }
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -56,6 +87,12 @@ void releaseCubesAuto(){
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+    pros::lcd::initialize();
+    pros::lcd::print(0, "ALLIANCE (BTN 1): RED");
+    pros::lcd::print(1, "POSITION (BTN 2): FAR");
+    pros::lcd::print(2, "STACK (BTN 3): BIG");
+    pros::lcd::print(4, "PEMBROKE PEMBOTS 12223C");
+    pros::lcd::print(7, "GOOD LUCK, TEAM!");
 }
 
 /**
@@ -75,12 +112,7 @@ void disabled() {}
  * starts.
  */
 void competition_initialize() {
-	pros::lcd::initialize();
-    pros::lcd::print(0, "ALLIANCE (BTN 1): RED");
-    pros::lcd::print(1, "POSITION (BTN 2): FAR");
-    pros::lcd::print(2, "STACK (BTN 3): BIG");
-    pros::lcd::print(4, "PEMBROKE PEMBOTS 12223C");
-    pros::lcd::print(7, "GOOD LUCK, TEAM!");
+	
     pros::lcd::register_btn0_cb(on_alliance_button);
     pros::lcd::register_btn1_cb(on_position_button);
     pros::lcd::register_btn2_cb(on_stack_button);
@@ -98,21 +130,25 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    drive.setMaxVelocity(50);
-    rollers.setMaxVelocity(10);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(127);
+    pros::delay(1000);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-100);
+    pros::delay(1250);
+    pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
+    drive.setMaxVelocity(90);
+    rollers.setMaxVelocity(200);
     using namespace okapi;
-    rollers.forward(30);
+    rollers.forward(200);
     if (ALLIANCE == false){ // RED
         if (STACK == false) { // BIG
             if (POSITION == false){ // FAR
                 drive.moveDistance(2_ft);
                 rollers.stop();
                 drive.turnAngle(-180_deg);
-                drive.moveDistance(2_ft);
-                drive.turnAngle(90_deg);
-                drive.moveDistance(2.5_ft);
+                drive.moveDistance(1.8_ft);
+                drive.turnAngle(89_deg);
+                drive.moveDistance(2.3_ft);
                 releaseCubesAuto();
-                drive.moveDistance(-2_ft);
                 drive.turnAngle(90_deg);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(1_ft);
@@ -129,23 +165,20 @@ void autonomous() {
         }
         if (STACK == true) { // SMALL
             if (POSITION == false){ // FAR
-                drive.moveDistance(3_ft);
+                drive.moveDistance(4_ft);
+                rollers.stop();
                 drive.turnAngle(180_deg);
-                drive.moveDistance(3_ft);
+                drive.moveDistance(4_ft);
                 drive.turnAngle(-90_deg);
                 drive.moveDistance(2.5_ft);
                 releaseCubesAuto();
-                drive.moveDistance(-2_ft);
-                drive.turnAngle(-90_deg);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(3_ft);
                 drive.turnAngle(180_deg);
-                drive.moveDistance(3_ft);
-                drive.turnAngle(-90_deg);
-                drive.moveDistance(1_ft);
-                releaseCubesAuto();
-                drive.moveDistance(-1.5_ft);
-                drive.turnAngle(-90_deg);
+                drive.moveDistance(1.6_ft);
+                drive.turnAngle(-45_deg);
+                drive.moveDistance(2_ft);
+                releaseCubesDiagonal();
             }
         }
     }
@@ -153,15 +186,13 @@ void autonomous() {
         if (STACK == false) { // BIG
             if (POSITION == false){ // FAR
                 drive.moveDistance(2_ft);
-                drive.turnAngle(90_deg);
-                drive.moveDistance(3.5_ft);
                 rollers.stop();
-                drive.turnAngle(90_deg);
-                drive.moveDistance(0.5_ft);
-                releaseCubesAuto();
-                drive.moveDistance(-0.5_ft);
                 drive.turnAngle(180_deg);
-                drive.moveDistance(-1.5_ft);
+                drive.moveDistance(1.8_ft);
+                drive.turnAngle(-89_deg);
+                drive.moveDistance(2.3_ft);
+                releaseCubesAuto();
+                drive.turnAngle(-90_deg);
             } if (POSITION == true){ // NEAR
                 drive.moveDistance(2_ft);
                 drive.turnAngle(-90_deg);
@@ -216,39 +247,38 @@ void autonomous() {
  */
 void opcontrol() {
     intake_mover_motor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    drive.setMaxVelocity(75);
+    drive.setMaxVelocity(110);
     int left = 0;
     int right = 0;
 	while(true){
-        if (driver.get_analog(ANALOG_LEFT_X) > 0) {
-            // if ARM ANGLE LESS THAN 20 Degrees rotate motor back
-            MTR_frontLeft.move(driver.get_analog(ANALOG_LEFT_Y));
-            MTR_frontRight.move(driver.get_analog(ANALOG_LEFT_Y));
-        }; 
-        if (driver.get_analog(ANALOG_RIGHT_Y) > 0) {
-            MTR_backLeft.move(driver.get_analog(ANALOG_RIGHT_Y));
-            MTR_backRight.move(driver.get_analog(ANALOG_RIGHT_Y));
-        }
-        right = driver.get_analog(ANALOG_RIGHT_Y);
-        left = driver.get_analog(ANALOG_LEFT_Y);
-        right = right / 127;
-        left = left / 127;
+        MTR_frontLeft.move(driver.get_analog(ANALOG_LEFT_Y));
+        MTR_frontRight.move(driver.get_analog(ANALOG_RIGHT_Y));
+        MTR_backLeft.move(driver.get_analog(ANALOG_LEFT_Y));
+        MTR_backRight.move(driver.get_analog(ANALOG_RIGHT_Y));
         
 		if (driver.get_digital(DIGITAL_R2)){
-			rollers.forward(63.5);
+            rollers.setMaxVelocity(200);
+			rollers.forward(200);
 		} else if (driver.get_digital(DIGITAL_X)){
-			rollers.forward(-12);
+            rollers.setMaxVelocity(-100);
+			rollers.forward(100);
         } else if (driver.get_digital(DIGITAL_B)){
-            rollers.forward(-1);
+            rollers.setMaxVelocity(-12);
+            rollers.forward(100);
+        }
+        else if (driver.get_digital(DIGITAL_R1)){
+            rollers.setMaxVelocity(-100);
+			rollers.forward(100);
         }
         else {
-			rollers.stop();
+            rollers.setMaxVelocity(1);
+			rollers.forward(100);
 		}
 		
 		if (driver.get_digital(DIGITAL_L2)){ // push forwards
-			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(100);
+			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(75);
 		} else if (driver.get_digital(DIGITAL_L1)){ // move back
-			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-100);
+			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(-75);
 		} else {
 			pros::Motor(INTAKE_MOVER_MOTOR_PORT).move(0);
 		}

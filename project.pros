@@ -1,7 +1,7 @@
 {
     "py/object": "pros.conductor.project.Project",
     "py/state": {
-        "project_name": "Nightfury2019Comp",
+        "project_name": "RED Nightfury2019Comp",
         "target": "v5",
         "templates": {
             "kernel": {
