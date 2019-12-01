@@ -8,6 +8,7 @@
  */
 
 // Hello Japser, can you see me?
+
 void on_alliance_button () {
     if(ALLIANCE == false){
         ALLIANCE = true;
