@@ -6,6 +6,8 @@
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
+
+// Hello Japser, can you see me?
 void on_alliance_button () {
     if(ALLIANCE == false){
         ALLIANCE = true;
